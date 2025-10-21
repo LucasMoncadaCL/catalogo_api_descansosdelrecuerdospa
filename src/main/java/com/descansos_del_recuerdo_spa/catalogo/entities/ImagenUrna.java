@@ -1,5 +1,6 @@
 package com.descansos_del_recuerdo_spa.catalogo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,6 @@ public class ImagenUrna {
 
     @ManyToOne
     @JoinColumn(name = "urna_id", nullable = false)
+    @JsonIgnore
     private Urna urna;
 }
