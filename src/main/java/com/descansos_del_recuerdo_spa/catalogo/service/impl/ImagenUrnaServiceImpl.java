@@ -36,13 +36,40 @@ public class ImagenUrnaServiceImpl implements ImagenUrnaService {
             Path ruta = Paths.get(UPLOAD_DIR + nombreArchivo);
             Files.copy(archivo.getInputStream(), ruta, StandardCopyOption.REPLACE_EXISTING);
 
-            ImagenUrna imagen = ImagenUrna.builder()
+            String nuevaUrl = "/" + UPLOAD_DIR + nombreArchivo;
+
+            // 🔥 Si la nueva imagen es principal
+            if (principal) {
+                // Desmarcar la anterior
+                imagenUrnaRepository.findByUrnaIdAndPrincipalTrue(urnaId)
+                        .ifPresent(imgAnterior -> {
+                            imgAnterior.setPrincipal(false);
+                            imagenUrnaRepository.save(imgAnterior);
+                        });
+
+                // 🪄 Actualizar el campo imagenPrincipal en la tabla urna
+                urna.setImagenPrincipal(nuevaUrl);
+                urnaRepository.save(urna);
+            }
+
+            // Guardar la nueva imagen
+            ImagenUrna nueva = ImagenUrna.builder()
                     .urna(urna)
-                    .url("/" + UPLOAD_DIR + nombreArchivo)
+                    .url(nuevaUrl)
                     .principal(principal)
                     .build();
 
-            return imagenUrnaRepository.save(imagen);
+            ImagenUrna guardada = imagenUrnaRepository.save(nueva);
+
+            // Si es principal, ponerla primera visualmente
+            if (principal && urna.getImagenes() != null) {
+                List<ImagenUrna> imagenes = urna.getImagenes();
+                imagenes.removeIf(ImagenUrna::getPrincipal); // remover la vieja principal
+                imagenes.add(0, guardada);
+            }
+
+            return guardada;
+
         } catch (IOException e) {
             throw new RuntimeException("Error al guardar la imagen", e);
         }

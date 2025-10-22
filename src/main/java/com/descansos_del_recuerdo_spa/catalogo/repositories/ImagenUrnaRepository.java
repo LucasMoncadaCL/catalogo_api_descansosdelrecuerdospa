@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ImagenUrnaRepository extends JpaRepository<ImagenUrna, Long> {
@@ -14,5 +15,6 @@ public interface ImagenUrnaRepository extends JpaRepository<ImagenUrna, Long> {
     List<ImagenUrna> findByUrnaId(Long urnaId);
 
     // Buscar la imagen principal
-    ImagenUrna findByUrna_IdAndPrincipalTrue(Long urnaId);
+    Optional<ImagenUrna> findByUrnaIdAndPrincipalTrue(Long urnaId);
+
 }
