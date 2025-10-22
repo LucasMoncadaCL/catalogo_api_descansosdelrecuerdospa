@@ -4,6 +4,7 @@ import com.descansos_del_recuerdo_spa.catalogo.entities.Urna;
 import com.descansos_del_recuerdo_spa.catalogo.service.UrnaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.descansos_del_recuerdo_spa.catalogo.dto.UrnaInputDTO;
 
 import java.util.List;
 
@@ -45,14 +46,16 @@ public class UrnaController {
         return ResponseEntity.ok(urnaService.findByModelo(modeloId));
     }
 
+    // 2. Cambiar @PostMapping para que acepte el DTO
     @PostMapping
-    public ResponseEntity<Urna> create(@RequestBody Urna urna) {
-        return ResponseEntity.status(201).body(urnaService.save(urna));
+    public ResponseEntity<Urna> create(@RequestBody UrnaInputDTO urnaDTO) {
+        return ResponseEntity.status(201).body(urnaService.save(urnaDTO));
     }
 
+    // 3. Cambiar @PutMapping para que acepte el DTO
     @PutMapping("/{id}")
-    public ResponseEntity<Urna> update(@PathVariable Long id, @RequestBody Urna urna) {
-        return ResponseEntity.ok(urnaService.update(id, urna));
+    public ResponseEntity<Urna> update(@PathVariable Long id, @RequestBody UrnaInputDTO urnaDTO) {
+        return ResponseEntity.ok(urnaService.update(id, urnaDTO));
     }
 
     @DeleteMapping("/{id}")

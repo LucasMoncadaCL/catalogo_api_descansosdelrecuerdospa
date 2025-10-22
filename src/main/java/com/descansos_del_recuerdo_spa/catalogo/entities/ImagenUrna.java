@@ -1,6 +1,6 @@
 package com.descansos_del_recuerdo_spa.catalogo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,14 +16,14 @@ public class ImagenUrna {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String url;
 
     @Column(nullable = false)
     private Boolean principal = false;
 
-    @ManyToOne
-    @JoinColumn(name = "urna_id", nullable = false)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "urna_id")
+    @JsonBackReference
     private Urna urna;
 }

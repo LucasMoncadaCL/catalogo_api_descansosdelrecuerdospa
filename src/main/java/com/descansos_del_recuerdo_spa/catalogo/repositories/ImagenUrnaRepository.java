@@ -11,7 +11,7 @@ import java.util.List;
 public interface ImagenUrnaRepository extends JpaRepository<ImagenUrna, Long> {
 
     // Buscar imágenes asociadas a una urna
-    List<ImagenUrna> findByUrna_Id(Long urnaId);
+    List<ImagenUrna> findByUrnaId(Long urnaId);
 
     // Buscar la imagen principal
     ImagenUrna findByUrna_IdAndPrincipalTrue(Long urnaId);
