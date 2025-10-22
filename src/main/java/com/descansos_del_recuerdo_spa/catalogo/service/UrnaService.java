@@ -1,5 +1,6 @@
 package com.descansos_del_recuerdo_spa.catalogo.service;
 
+import com.descansos_del_recuerdo_spa.catalogo.dto.UrnaInputDTO;
 import com.descansos_del_recuerdo_spa.catalogo.entities.Urna;
 
 import java.util.List;
@@ -11,7 +12,12 @@ public interface UrnaService {
     List<Urna> findByMaterial(Long materialId);
     List<Urna> findByColor(Long colorId);
     List<Urna> findByModelo(Long modeloId);
-    Urna save(Urna urna);
-    Urna update(Long id, Urna urna);
+
+    // 2. Cambiar la firma de save
+    Urna save(UrnaInputDTO urnaDTO);
+
+    // 3. Cambiar la firma de update
+    Urna update(Long id, UrnaInputDTO urnaDTO);
+
     void delete(Long id);
 }

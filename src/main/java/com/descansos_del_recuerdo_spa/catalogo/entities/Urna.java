@@ -1,5 +1,6 @@
 package com.descansos_del_recuerdo_spa.catalogo.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -67,5 +68,6 @@ public class Urna {
     private Modelo modelo;
 
     @OneToMany(mappedBy = "urna", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<ImagenUrna> imagenes;
 }
